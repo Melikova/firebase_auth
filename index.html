@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First App</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+                <section class="main">
+                    <div class="form_wrapper">
+                        <input type="radio" class="radio" name="radio" id="login" checked />
+                        <input type="radio" class="radio" name="radio" id="signup" />
+                        <div class="tile">
+                            <h3 class="login">Login Form</h3>
+                            <h3 class="signup">Signup Form</h3>
+                        </div>
+                        <label class="tab login_tab" for="login">
+                            Login
+                        </label>
+                        <label class="tab signup_tab" for="signup">
+                            Signup
+                        </label>
+                        <span class="shape"></span>
+                        <div class="form_wrap">
+                            <!-- Log in -->
+                            <div class="form_fild login_form">
+                                <div class="input_group">
+                                    <input id="email_input_login" type="email" class="input" placeholder="Email Address" />
+                                    <span id="login_email_input_error"></span>
+                                </div>
+                                <div class="input_group">
+                                    <input id="pass_input_login" type="password" class="input" placeholder="Password" />
+                                    <span id="login_pass_input_error"></span>
+                                </div>
+                                <a href="#forgot" class="forgot">Forgot password?</a>
+                                <input id="submit_login" type="submit" class="btn" value="Login" />
+                                <div class="not_mem">
+                                    <label  for="signup">Not a member? <span> Signup now</span></label>
+                                </div>
+                            </div>
+                            <!-- Sign Up -->
+                            <div class="form_fild signup_form">
+                                <div class="input_group">
+                                    <input id="email_input" type="email" class="input" placeholder="Email Address" />
+                                    <span id="signup_email_input_error"></span>
+                                </div>
+                                <div class="input_group">
+                                    <input id="pass_input" type="password" class="input" placeholder="Password" />
+                                    <span id="signup_pass_input_error"></span>
+                                </div>
+                                <input id="submit_signup" type="submit" class="btn" value="Signup" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js'
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyBoVyxAg91I886ppleJDDF2sPLcz3Ytcbc",
+          authDomain: "my-first-project-763bb.firebaseapp.com",
+          projectId: "my-first-project-763bb",
+          storageBucket: "my-first-project-763bb.appspot.com",
+          messagingSenderId: "415503144090",
+          appId: "1:415503144090:web:8cebb0cafcd21e6ef03b23",
+          measurementId: "G-WQSKHMMQ05"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+
+        const submitSignupButton = document.querySelector('#submit_signup');
+        const email_input = document.querySelector('#email_input');
+        const pass_input = document.querySelector('#pass_input');
+
+        const submitLoginButton = document.querySelector('#submit_login');
+        const email_input_login = document.querySelector('#email_input_login');
+        const pass_input_login = document.querySelector('#pass_input_login');
+
+
+        submitSignupButton.addEventListener('click', (e)=>{
+            e.preventDefault();
+            createUserWithEmailAndPassword(auth, email_input.value, pass_input.value)
+            .then(cred=>{
+                console.log(cred);
+            }).catch(err=>{
+                console.log(err);
+            })
+        })
+
+        submitLoginButton.addEventListener('click', (e)=>{
+            e.preventDefault();
+            signInWithEmailAndPassword(auth, email_input_login.value, pass_input_login.value)
+            .then(cred=>{
+                console.log(cred);
+            }).catch(err=>{
+                console.log(err);
+            })
+        })
+    </script>
+</body>
+</html>
